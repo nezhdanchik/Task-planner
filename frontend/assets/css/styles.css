@@ -1,0 +1,34 @@
+.navbar {
+  background: rgb(13,110,253);
+}
+
+#task-create {
+  width: 100%;
+  height: 100px;
+  background: rgba(255,255,255,0);
+  padding: 10px 0px;
+}
+
+#task-create-btn {
+  width: 50%;
+}
+
+#create-area {
+  width: 60%;
+  height: 100%;
+  padding: 10px;
+}
+
+#container-create {
+  width: 100%;
+  height: 100%;
+  margin: 16px;
+}
+
+#tasks {
+  width: 100%;
+  height: 100vh;
+}
+
+
+

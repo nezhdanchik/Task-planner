@@ -4,3 +4,6 @@ pydantic~=2.9.2
 pydantic-settings~=2.6.1
 asyncpg
 fastapi~=0.115.4
+pytz~=2024.2
+uvicorn~=0.32.0
+PyJWT~=2.9.0

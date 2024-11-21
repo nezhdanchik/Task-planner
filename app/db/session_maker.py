@@ -1,8 +1,7 @@
 from functools import wraps
 
-from sqlalchemy import text
-
 from database import async_session_maker
+from sqlalchemy import text
 
 
 def connection(isolation_level: str | None = None, commit: bool = True):
@@ -18,13 +17,14 @@ def connection(isolation_level: str | None = None, commit: bool = True):
             async with async_session_maker() as session:
                 try:
                     if isolation_level:
-                        await session.execute(text(
-                            f"SET TRANSACTION ISOLATION LEVEL {isolation_level}"))
+                        await session.execute(
+                            text(f"SET TRANSACTION ISOLATION LEVEL {isolation_level}")
+                        )
                     result = await method(*args, session=session, **kwargs)
                     if commit:
                         await session.commit()
                     return result
-                except Exception as e:
+                except Exception:
                     await session.rollback()
                     raise
                 finally:

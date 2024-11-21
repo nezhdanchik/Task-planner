@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body style="background: rgb(241,241,241);">
+    <nav class="navbar navbar-expand-md sticky-top py-3">
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span style="font-size: 20px;color: rgb(255,255,255);">Planner</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div id="navcol-1" class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link active" href="#" style="font-weight: bold;font-size: 20px;color: rgb(255,255,255);">Задачи</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" style="font-size: 20px;color: rgb(255,255,255);">История</a></li>
+            </ul><button class="btn btn-primary border rounded border-1 focus-ring" type="button" style="margin-right: 22px;">{{ name }}</button><button class="btn btn-primary text-bg-dark" type="button">Выйти</button>
+        </div>
+        </div>
+    </nav>
+    <section class="position-relative py-4 py-xl-5">
+        <div class="container position-relative">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-8 col-lg-6 col-xl-5 col-xxl-4">
+                    <div class="card mb-5">
+                        <div class="card-body p-sm-5">
+                            <h2 class="text-center mb-4">Новая задача</h2>
+                            <form method="post">
+                                <div class="mb-3"><input class="form-control" type="text" id="title" name="title" placeholder="Название"></div>
+                                <div class="mb-3"><textarea class="form-control" id="description" name="description" rows="6" placeholder="Описание"></textarea></div>
+                                <div class="d-flex justify-content-between align-items-xl-center mb-3"><label class="form-label" style="margin: 0px;">Приоритет</label><select class="form-select" style="margin-left: 0px;width: 50%;">
+                                        <option value="1">Низкий</option>
+                                        <option value="2">Средний</option>
+                                        <option value="3">Высокий</option>
+                                    </select></div>
+                                <div><button class="btn btn-primary d-block w-100" type="submit">Добавить</button></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+{% endblock %}
