@@ -1,3 +1,7 @@
+from datetime import datetime
+
+from pydantic import BaseModel
+
 from db.interaction import TaskDAO
 from endpoints.account import current_user_annotation
 from fastapi import APIRouter, status
@@ -18,6 +22,12 @@ async def create_task(task: TaskCreate, user: current_user_annotation):
 async def get_task(task_id: int, user: current_user_annotation):
     task = await TaskDAO.get_one_or_none(task_id)
     return task
+
+@router.post("/{task_id}/end/")
+async def finish_task(task_id: int, user: current_user_annotation):
+    class FinishTask(BaseModel):
+        finished: datetime
+    return await TaskDAO.update(task_id, values_to_update=FinishTask(finished=datetime.now()))
 
 
 @router.patch("/{task_id}/")

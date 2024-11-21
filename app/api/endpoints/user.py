@@ -3,20 +3,17 @@ from fastapi import APIRouter
 
 from interaction import TaskDAO
 from schemas import IdModel
-from schemas.task_schema import TaskStatusPriority
+from schemas.task_schema import TaskStatus
 router = APIRouter()
 
 
 @router.get("/tasks/")
 async def get_tasks(
-    user: current_user_annotation, status: str = "created", priority: str = "low"
-):
-    # class FilterModel(TaskStatusPriority, IdModel):
-    #     pass
-    #
-    # tasks = await TaskDAO.get_all(filters=FilterModel(
-    #     id=user.id,
-    #     status=status,
-    #     priority=priority,
-    # ))
-    return {"status": status, "priority": priority}
+    user: current_user_annotation, status: str = "created"):
+    #валидация статуса
+    TaskStatus(status=status)
+    tasks = await TaskDAO.get_all_tasks_with_status(
+        user_id=user.id,
+        status=status
+    )
+    return tasks

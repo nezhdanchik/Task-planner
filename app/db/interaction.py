@@ -131,19 +131,25 @@ class TaskDAO(BaseDAO):
     #     task.status = new_status
     #     return task
 
+    @classmethod
+    @connection(commit=False)
+    async def get_all_tasks_with_status(
+            cls,
+            user_id: int,
+            status: str = TaskStatus.CREATED.value,
+            session: AsyncSession = ...,
+    ):
+        objs = await session.execute(select(cls.Table).filter_by(status=status, user_id=user_id).order_by(cls.Table.priority.desc(), cls.Table.created_at))
+        objs = objs.scalars().all()
+        return objs
+
     # @classmethod
-    # @connection()
-    # async def change_priority(cls, task_id, new_priority: TaskPriority, session: AsyncSession):
-    #     """
-    #     :return: None - если обновление не произошло
-    #     """
-    #     task = await cls.get_one_or_none(task_id)
-    #     # task = await session.get(cls.Table, task_id)
+    # @connection(commit=True)
+    # async def finish_task(cls, task_id: int, session: AsyncSession = ...):
+    #     task = await session.get(cls.Table, task_id)
     #     if not task:
     #         return False
-    #     task.priority = new_priority
-    #     return task
-
+    #     task.finished = func.now()
 
 if __name__ == "__main__":
     user_id = 22
