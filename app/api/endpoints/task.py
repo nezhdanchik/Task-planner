@@ -61,7 +61,7 @@ async def change_status(
 
 
 @router.put("/{task_id}/priority")
-async def change_status(
+async def change_priority(
     task_id: int, priority_model: TaskPriority, user: current_user_annotation
 ):
     updated_task = await TaskDAO.update(task_id, values_to_update=priority_model)

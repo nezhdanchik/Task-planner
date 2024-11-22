@@ -37,7 +37,7 @@
                         <h2 class="text-center" style="margin: 20px; font-size: 1.7em">{{ tasks.name_status | upper }}</h2>
 
                         {% for task in tasks.tasks_one_kind %}
-                            <div class="card">
+                            <div class="card" data-task-id="{{ task.id }}" style="margin-top: 10px">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-xl-center">
                                         <h4 style="width: 70%;">{{ task.title }}</h4>
@@ -52,11 +52,15 @@
                                     <p class="card-text">{{ task.description }} </p>
                                     <div id="status-button" style="width: 100%;">
                                         <div class="dropdown d-lg-flex flex-shrink-0" style="width: 100%;border-style: none;"><button class="btn btn-primary btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" style="width: 100%;background: rgb(218,223,231);border-style: none;color: rgb(0,0,0);">Поменять статус задачи</button>
-                                            <div class="dropdown-menu"><a class="dropdown-item" href="#">Создана</a><a class="dropdown-item" href="#">В прогрессе</a><a class="dropdown-item" href="#">Выполнена</a></div>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" onclick="changeStatus(event, 'created')">Создана</a>
+                                                <a class="dropdown-item" onclick="changeStatus(event, 'in_progress')">В прогрессе</a>
+                                                <a class="dropdown-item" onclick="changeStatus(event, 'completed')">Выполнена</a>
+                                            </div>
                                         </div>
                                         <div class="d-flex justify-content-between" style="margin-top: 6px;">
                                             <button class="btn btn-sm" type="button" style="width: 49%;background: rgb(218,223,231);border-style: none;color: rgb(0,0,0);">Редактировать</button>
-                                            <button class="btn btn-sm" type="button" style="width: 49%;background: rgb(218,223,231);border-style: none;color: rgb(0,0,0);">Удалить</button>
+                                            <button class="btn btn-sm" type="button" style="width: 49%;background: rgb(218,223,231);border-style: none;color: rgb(0,0,0);" onclick="deleteTask(event)">Удалить</button>
                                         </div>
                                     </div>
                                 </div>
