@@ -9,7 +9,7 @@ from app.db.database import BaseTable, not_none_str, str_uniq
 
 class Task(BaseTable):
     title: Mapped[not_none_str]
-    description: Mapped[str] = mapped_column(default=None)
+    description: Mapped[str] = mapped_column(default=None, nullable=True)
     finished: Mapped[datetime] = mapped_column(default=None, nullable=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
     status: Mapped[TaskStatus]

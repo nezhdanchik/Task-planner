@@ -1,12 +1,12 @@
 from api.exceptions import *
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.api.endpoints.account import router as account_router
-from app.api.endpoints.task import router as task_router
 from app.api.endpoints.pages import router as page_router
+from app.api.endpoints.task import router as task_router
 from app.api.endpoints.user import router as user_router
-from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 app.mount("/assets", StaticFiles(directory="../../../frontend/assets"), name="assets")

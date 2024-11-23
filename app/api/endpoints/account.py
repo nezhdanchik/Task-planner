@@ -1,10 +1,11 @@
 from datetime import datetime, timedelta
 from typing import Annotated
 
+import bcrypt
 import jwt
 from api.exceptions import *
 from db.interaction import UserDAO
-from fastapi import APIRouter, Depends, status, Request, Response
+from fastapi import APIRouter, Depends, Request, Response, status
 from schemas.user_schema import UserCreate, UserIn, UserOnlyLogin, UserOut
 from sqlalchemy.exc import IntegrityError
 
@@ -64,6 +65,7 @@ current_user_annotation = Annotated[UserOut, Depends(get_current_user)]
 )
 async def create_user(user: UserCreate) -> UserOut:
     try:
+        user.password = bcrypt.hashpw(user.password.encode(), bcrypt.gensalt()).decode()
         new_user = await UserDAO.create(user)
     except IntegrityError:
         raise UserException(detail="User already exists", status_code=400)
@@ -73,12 +75,13 @@ async def create_user(user: UserCreate) -> UserOut:
 
 @router.post("/login/")
 async def enter_user(user: UserIn, response: Response) -> dict:
-    user = await UserDAO.get_one_or_none_by(UserOnlyLogin(login=user.login))
-    if not user:
+    user_in_db = await UserDAO.get_one_or_none_by(UserOnlyLogin(login=user.login))
+    if not user_in_db:
         raise UserException(detail="User does not exist", status_code=400)
-    if user.password != user.password:
+    valid = bcrypt.checkpw(user.password.encode(), user_in_db.password.encode())
+    if not valid:
         raise UserException(detail="Invalid password", status_code=400)
-    access_token = create_jwt_token({"sub": user.id})
+    access_token = create_jwt_token({"sub": user_in_db.id})
     set_token_in_cookie(response=response, token=access_token)
     return {
         "access_token": access_token,

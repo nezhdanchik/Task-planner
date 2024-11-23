@@ -1,83 +1,130 @@
 {% extends 'base.html' %}
 
 
-
 {% block content %}
-<body style="background: rgb(241,241,241);">
-    <nav class="navbar navbar-expand-md sticky-top py-3">
-        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span style="font-size: 20px;color: rgb(255,255,255);">Planner</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div id="navcol-1" class="collapse navbar-collapse">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link active" href="#" style="font-weight: bold;font-size: 20px;color: rgb(255,255,255);">Задачи</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" style="font-size: 20px;color: rgb(255,255,255);">История</a></li>
-                </ul><button class="btn btn-primary border rounded border-1 focus-ring" type="button" style="margin-right: 22px;">{{ name }}</button><button id="logout-btn" class="btn btn-primary text-bg-dark" type="button" onclick="logout(event)">Выйти</button>
-            </div>
+
+<nav class="navbar navbar-expand-md sticky-top py-3">
+    <div class="container"><a class="navbar-brand d-flex align-items-center"
+                              href="#"><span
+            style="font-size: 20px;color: rgb(255,255,255);">Planner</span></a>
+        <button data-bs-toggle="collapse" class="navbar-toggler"
+                data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span
+                class="navbar-toggler-icon"></span></button>
+        <div id="navcol-1" class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link active" href="#"
+                                        style="font-weight: bold;font-size: 20px;color: rgb(255,255,255);">Задачи</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="#"
+                                        style="font-size: 20px;color: rgb(255,255,255);">История</a>
+                </li>
+            </ul>
+            <button class="btn btn-primary border rounded border-1 focus-ring"
+                    type="button" style="margin-right: 22px;">{{ name }}
+            </button>
+            <button id="logout-btn" class="btn btn-primary text-bg-dark"
+                    type="button" onclick="logout(event)">Выйти
+            </button>
         </div>
-    </nav>
-    <main style="width: 100%;height: 100vh;">
-        <section class="py-4 py-xl-5">
-            <div class="container d-flex justify-content-lg-center justify-content-xl-center">
-                <div class="text-dark bg-light border rounded border-0 border-light d-flex flex-column justify-content-between flex-lg-row p-4 p-md-5" style="width: 60%;">
-                    <div class="pb-2 pb-lg-1">
-                        <h2 class="fw-bold mb-2">Создай новую задачу</h2>
-                        <p class="mb-0">чтобы не забыть её выполнить</p>
-                    </div>
-                    <div class="my-2"><a class="btn btn-primary fs-5 py-2 px-4" role="button" href="/page/task/create">Создать</a></div>
+    </div>
+</nav>
+<main style="width: 100%;height: 100vh;">
+    <section class="py-4 py-xl-5">
+        <div class="container d-flex justify-content-lg-center justify-content-xl-center">
+            <div class="text-dark bg-light border rounded border-0 border-light d-flex flex-column justify-content-between flex-lg-row p-4 p-md-5"
+                 style="width: 60%;">
+                <div class="pb-2 pb-lg-1">
+                    <h2 class="fw-bold mb-2">Создай новую задачу</h2>
+                    <p class="mb-0">чтобы не забыть её выполнить</p>
+                </div>
+                <div class="my-2"><a class="btn btn-primary fs-5 py-2 px-4"
+                                     role="button" href="/page/task/create">Создать</a>
                 </div>
             </div>
-        </section>
-        <section id="tasks">
-            <h1 class="text-center">ЗАДАЧИ</h1>
-            <div class="container">
-                <div class="row">
+        </div>
+    </section>
+    <section id="tasks">
+        <h1 class="text-center">ЗАДАЧИ</h1>
+        <div class="container">
+            <div class="row">
 
-                    {% for tasks in all_tasks %}
+                {% for tasks in all_tasks %}
 
-                    <div class="col-md-4">
-                        <h2 class="text-center" style="margin: 20px; font-size: 1.7em">{{ tasks.name_status | upper }}</h2>
+                <div class="col-md-4">
+                    <h2 class="text-center"
+                        style="margin: 20px; font-size: 1.7em">{{
+                        tasks.name_status | upper }}</h2>
 
-                        {% for task in tasks.tasks_one_kind %}
-                            <div class="card" data-task-id="{{ task.id }}" style="margin-top: 10px">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <h4 style="width: 70%;">{{ task.title }}</h4>
+                    {% for task in tasks.tasks_one_kind %}
+                    <div class="card" data-task-id="{{ task.id }}"
+                         style="margin-top: 10px">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h4 style="width: 70%;">{{ task.title }}</h4>
 
-                                            {% if task.priority == 'high' %}
+                                {% if task.priority == 'high' %}
 
-                                                <span class="d-sm-flex align-items-sm-center" style="padding: 6px;border-radius: 5px;background: #f8bbbb;border: 1px solid red; height: 25px">высокий</span>
-                                            {% elif task.priority == 'medium' %}
-                                               <span class="d-sm-flex align-items-sm-center" style="padding: 6px;border-radius: 5px;background: #f8eebb;border: 1px solid #fffb00; height: 25px">средний</span>
-                                            {% else %}
-                                                <span class="d-sm-flex align-items-sm-center" style="padding: 6px;border-radius: 5px;background: #bbf8c0;border: 1px solid #00ff22; height: 25px">низкий</span>
-                                            {% endif %}
-                                    </div>
-                                    <p class="card-text">{{ task.description }} </p>
-                                    <div id="status-button" style="width: 100%;">
-                                        <div class="dropdown d-lg-flex flex-shrink-0" style="width: 100%;border-style: none;"><button class="btn btn-primary btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" style="width: 100%;background: rgb(218,223,231);border-style: none;color: rgb(0,0,0);">Поменять статус задачи</button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" onclick="changeStatus(event, 'created')">Создана</a>
-                                                <a class="dropdown-item" onclick="changeStatus(event, 'in_progress')">В прогрессе</a>
-                                                <a class="dropdown-item" onclick="changeStatus(event, 'completed')">Выполнена</a>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-between" style="margin-top: 6px;">
-                                            <button class="btn btn-sm" type="button" style="width: 49%;background: rgb(218,223,231);border-style: none;color: rgb(0,0,0);">Редактировать</button>
-                                            <button class="btn btn-sm" type="button" style="width: 49%;background: rgb(218,223,231);border-style: none;color: rgb(0,0,0);" onclick="deleteTask(event)">Удалить</button>
-                                        </div>
+                                <span class="d-sm-flex align-items-sm-center"
+                                      style="padding: 6px;border-radius: 5px;background: #f8bbbb;border: 1px solid red; height: 25px">высокий</span>
+                                {% elif task.priority == 'medium' %}
+                                <span class="d-sm-flex align-items-sm-center"
+                                      style="padding: 6px;border-radius: 5px;background: #f8eebb;border: 1px solid #fffb00; height: 25px">средний</span>
+                                {% else %}
+                                <span class="d-sm-flex align-items-sm-center"
+                                      style="padding: 6px;border-radius: 5px;background: #bbf8c0;border: 1px solid #00ff22; height: 25px">низкий</span>
+                                {% endif %}
+                            </div>
+                            <p class="card-text">{{ task.description }} </p>
+                            <div id="status-button" style="width: 100%;">
+                                <div class="dropdown d-lg-flex flex-shrink-0"
+                                     style="width: 100%;border-style: none;">
+                                    <button class="btn btn-primary btn-sm dropdown-toggle"
+                                            aria-expanded="false"
+                                            data-bs-toggle="dropdown"
+                                            data-bs-auto-close="outside"
+                                            type="button"
+                                            style="width: 100%;background: rgb(218,223,231);border-style: none;color: rgb(0,0,0);">
+                                        Поменять статус задачи
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item"
+                                           onclick="changeStatus(event, 'created')">Создана</a>
+                                        <a class="dropdown-item"
+                                           onclick="changeStatus(event, 'in_progress')">В
+                                            прогрессе</a>
+                                        <a class="dropdown-item"
+                                           onclick="changeStatus(event, 'completed')">Выполнена</a>
                                     </div>
                                 </div>
+                                <div class="d-flex justify-content-between"
+                                     style="margin-top: 6px;">
+                                    <button class="btn btn-sm" type="button"
+                                            style="width: 49%;background: rgb(218,223,231);border-style: none;color: rgb(0,0,0);">
+                                        Редактировать
+                                    </button>
+                                    <button class="btn btn-sm" type="button"
+                                            style="width: 49%;background: rgb(218,223,231);border-style: none;color: rgb(0,0,0);"
+                                            onclick="deleteTask(event)">Удалить
+                                    </button>
+                                </div>
                             </div>
-                        {% endfor %}
-
+                        </div>
                     </div>
                     {% endfor %}
 
-
                 </div>
+                {% endfor %}
+
+
             </div>
-        </section>
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/index.js"></script>
-</body>
+
+        </div>
+    </section>
+
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/index.js"></script>
 {% endblock %}

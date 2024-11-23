@@ -5,11 +5,14 @@ from schemas import enums
 class TaskStatus(BaseModel):
     status: enums.TaskStatus
 
+
 class TaskPriority(BaseModel):
     priority: enums.TaskPriority
 
+
 class TaskStatusPriority(TaskStatus, TaskPriority):
     pass
+
 
 class TaskCreate(BaseModel):
     title: str = Field(min_length=1, max_length=200)

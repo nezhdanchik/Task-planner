@@ -1,4 +1,7 @@
 import asyncio
+
+from api.schemas.enums import TaskPriority, TaskStatus
+from api.schemas.task_schema import TaskCreate
 from database import BaseTable
 from models import Task as TaskTable
 from models import User as UserTable
@@ -6,8 +9,6 @@ from pydantic import BaseModel
 from session_maker import connection
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from api.schemas.enums import TaskStatus, TaskPriority
-from api.schemas.task_schema import TaskCreate
 
 
 class BaseDAO:
@@ -134,12 +135,16 @@ class TaskDAO(BaseDAO):
     @classmethod
     @connection(commit=False)
     async def get_all_tasks_with_status(
-            cls,
-            user_id: int,
-            status: str = TaskStatus.CREATED.value,
-            session: AsyncSession = ...,
+        cls,
+        user_id: int,
+        status: str = TaskStatus.CREATED.value,
+        session: AsyncSession = ...,
     ):
-        objs = await session.execute(select(cls.Table).filter_by(status=status, user_id=user_id).order_by(cls.Table.priority.desc(), cls.Table.created_at))
+        objs = await session.execute(
+            select(cls.Table)
+            .filter_by(status=status, user_id=user_id)
+            .order_by(cls.Table.priority.desc(), cls.Table.created_at)
+        )
         objs = objs.scalars().all()
         return objs
 
@@ -151,8 +156,9 @@ class TaskDAO(BaseDAO):
     #         return False
     #     task.finished = func.now()
 
+
 if __name__ == "__main__":
-    user_id = 22
+    user_id = 24
     # TaskCreate(
     #     title='Помыть посуду',
     #     description='Помыть все тарелки и кастрюли',
