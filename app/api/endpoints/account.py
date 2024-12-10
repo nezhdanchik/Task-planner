@@ -7,7 +7,8 @@ from fastapi import APIRouter, Depends, Request, Response, status
 from sqlalchemy.exc import IntegrityError
 
 from app.api.exceptions import *
-from app.api.schemas.user_schema import UserCreate, UserIn, UserOnlyLogin, UserOut
+from app.api.schemas.user_schema import UserCreate, UserIn, UserOnlyLogin, \
+    UserOut
 from app.core.config import get_algorithm, get_secret_key
 from app.db.interaction import UserDAO
 
@@ -65,7 +66,8 @@ current_user_annotation = Annotated[UserOut, Depends(get_current_user)]
 )
 async def create_user(user: UserCreate) -> UserOut:
     try:
-        user.password = bcrypt.hashpw(user.password.encode(), bcrypt.gensalt()).decode()
+        user.password = bcrypt.hashpw(user.password.encode(),
+                                      bcrypt.gensalt()).decode()
         new_user = await UserDAO.create(user)
     except IntegrityError:
         raise UserException(detail="User already exists", status_code=400)
@@ -75,7 +77,8 @@ async def create_user(user: UserCreate) -> UserOut:
 
 @router.post("/login/")
 async def enter_user(user: UserIn, response: Response) -> dict:
-    user_in_db = await UserDAO.get_one_or_none_by(UserOnlyLogin(login=user.login))
+    user_in_db = await UserDAO.get_one_or_none_by(
+        UserOnlyLogin(login=user.login))
     if not user_in_db:
         raise UserException(detail="User does not exist", status_code=400)
     valid = bcrypt.checkpw(user.password.encode(), user_in_db.password.encode())

@@ -1,9 +1,11 @@
 from datetime import datetime
+from typing import Annotated
 
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, Depends
 from pydantic import BaseModel
 
-from app.api.endpoints.account import current_user_annotation
+from app.api.schemas.user_schema import UserOut
+from app.api.endpoints.account import current_user_annotation, get_current_user
 from app.api.exceptions import UserException
 from app.api.schemas.task_schema import TaskCreate, TaskPriority, TaskStatus, TaskUpdate
 from app.db.interaction import TaskDAO
@@ -12,7 +14,7 @@ router = APIRouter()
 
 
 @router.post("/")
-async def create_task(task: TaskCreate, user: current_user_annotation):
+async def create_task(task: TaskCreate, user: Annotated[UserOut, Depends(get_current_user)]):
     new_task = await TaskDAO.create(task, user_id=user.id, exclude_unset=False)
     return new_task
 
