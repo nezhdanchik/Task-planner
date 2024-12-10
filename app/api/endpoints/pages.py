@@ -1,11 +1,13 @@
 from functools import partial
 
-from api.endpoints.account import current_user_annotation
-from api.endpoints.user import get_tasks
 from fastapi import APIRouter, Depends, Request
 from fastapi.templating import Jinja2Templates
 
-templates = Jinja2Templates(directory="../../../frontend/templates")
+from app.api.endpoints.account import current_user_annotation
+from app.api.endpoints.user import get_tasks
+
+# templates = Jinja2Templates(directory="../../../frontend/templates")
+templates = Jinja2Templates(directory="./frontend/templates")
 
 router = APIRouter()
 

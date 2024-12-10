@@ -1,14 +1,24 @@
 import asyncio
 
-from api.schemas.enums import TaskPriority, TaskStatus
-from api.schemas.task_schema import TaskCreate
-from database import BaseTable
-from models import Task as TaskTable
-from models import User as UserTable
 from pydantic import BaseModel
-from session_maker import connection
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.api.schemas.enums import TaskPriority, TaskStatus
+from app.api.schemas.task_schema import TaskCreate
+from app.db.database import BaseTable
+
+from .models import Task as TaskTable
+from .models import User as UserTable
+from .session_maker import connection
+
+
+# async def create_tables_if_not_exist():
+#     if not await are_tables_exist():
+#         print('нету таблиц')
+        # async with connection() as session:
+        #     async with session.begin():
+        #         await session.run_sync(BaseTable.metadata.create_all)
 
 
 class BaseDAO:

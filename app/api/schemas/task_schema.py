@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
-from schemas import enums
+
+from app.api.schemas import enums
 
 
 class TaskStatus(BaseModel):

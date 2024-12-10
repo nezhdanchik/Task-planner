@@ -1,7 +1,8 @@
 from functools import wraps
 
-from database import async_session_maker
 from sqlalchemy import text
+
+from .database import async_session_maker
 
 
 def connection(isolation_level: str | None = None, commit: bool = True):

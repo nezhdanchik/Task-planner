@@ -1,11 +1,12 @@
 from datetime import datetime
 
-from api.exceptions import UserException
-from db.interaction import TaskDAO
-from endpoints.account import current_user_annotation
 from fastapi import APIRouter, status
 from pydantic import BaseModel
-from schemas.task_schema import TaskCreate, TaskPriority, TaskStatus, TaskUpdate
+
+from app.api.endpoints.account import current_user_annotation
+from app.api.exceptions import UserException
+from app.api.schemas.task_schema import TaskCreate, TaskPriority, TaskStatus, TaskUpdate
+from app.db.interaction import TaskDAO
 
 router = APIRouter()
 

@@ -3,13 +3,13 @@ from typing import Annotated
 
 import bcrypt
 import jwt
-from api.exceptions import *
-from db.interaction import UserDAO
 from fastapi import APIRouter, Depends, Request, Response, status
-from schemas.user_schema import UserCreate, UserIn, UserOnlyLogin, UserOut
 from sqlalchemy.exc import IntegrityError
 
+from app.api.exceptions import *
+from app.api.schemas.user_schema import UserCreate, UserIn, UserOnlyLogin, UserOut
 from app.core.config import get_algorithm, get_secret_key
+from app.db.interaction import UserDAO
 
 router = APIRouter()
 LIFE_TIME = timedelta(days=100)
