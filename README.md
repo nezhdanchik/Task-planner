@@ -50,47 +50,6 @@ docker-compose up --build
 
 ---
 
-## 📂 Структура проекта
-
-```plaintext
-fastApiProject/
-├── app/
-│   ├── api/                
-│   │   ├── endpoints/      # Эндпоинты API
-│   │   │   ├── __init__.py
-│   │   │   ├── account.py  # Управление аккаунтами
-│   │   │   ├── main.py     # Основные маршруты
-│   │   │   ├── pages.py    # Страницы интерфейса
-│   │   │   ├── task.py     # Управление задачами
-│   │   │   └── user.py     # Управление пользователями
-│   │   ├── schemas/        # Схемы данных (Pydantic)
-│   │   │   ├── __init__.py
-│   │   │   ├── enums.py    # Перечисления
-│   │   │   ├── task_schema.py  # Схемы задач
-│   │   │   └── user_schema.py  # Схемы пользователей
-│   │   ├── __init__.py
-│   │   └── exceptions.py   # Кастомные исключения
-│   ├── core/               # Конфигурация приложения
-│   │   ├── __init__.py
-│   │   └── config.py       # Настройки
-│   ├── db/                 # Взаимодействие с базой данных
-│   │   ├── __init__.py
-│   │   ├── database.py     # Соединение с БД
-│   │   ├── interaction.py  # Операции с БД
-│   │   ├── models.py       # Модели SQLAlchemy
-│   │   └── session_maker.py  # Создание сессий
-├── frontend/               # Шаблоны и статические файлы
-│   ├── assets/             # CSS, JS
-│   └── templates/          # Jinja2-шаблоны
-├── migration/              # Файлы миграции Alembic
-├── tests/                  # Тесты проекта
-├── .env                    # Конфигурация окружения
-├── .gitignore              # Исключения для Git
-├── alembic.ini             # Конфигурация Alembic
-├── requirements.txt        # Список зависимостей
-```
-
----
 
 ## 📸 Скриншоты
 
