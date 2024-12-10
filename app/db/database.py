@@ -7,8 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncAttrs, async_sessionmaker, \
     create_async_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, declared_attr, mapped_column
 
-from app.core.config import get_db_url, get_postgres_db_url
-from core.config import get_db_name
+from app.core.config import get_db_url, get_postgres_db_url, get_db_name
 
 DATABASE_URL = get_db_url()
 DATABASE_NAME = get_db_name()
