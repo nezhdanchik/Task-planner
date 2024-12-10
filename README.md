@@ -23,7 +23,7 @@ SECRET_KEY='your_secret_key'
 ALGORITHM='HS256'
 ```
 
-### Запуск через pip
+### Запуск вручную
 ```
 pip install -r requirements.txt
 uvicorn app.api.endpoints.main:app --reload
