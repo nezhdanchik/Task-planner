@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     DB_PASSWORD: str
     SECRET_KEY: str
     ALGORITHM: str
+    REDIS_HOST: str
     model_config = SettingsConfigDict(
         env_file=os.path.join(
             os.path.dirname(os.path.abspath(__file__)), "..", "..", ".env"
@@ -43,3 +44,6 @@ def get_db_url():
 
 def get_db_name():
     return settings.DB_NAME
+
+def get_redis_host():
+    return settings.REDIS_HOST

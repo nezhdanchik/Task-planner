@@ -40,7 +40,8 @@ async def get_main_page(
     for ind, task_kind in enumerate(
         (tasks_created, tasks_in_progress, tasks_completed)
     ):
-        tasks = {"name_status": names_status[ind], "tasks_one_kind": await task_kind}
+        tasks_one_kind = await task_kind
+        tasks = {"name_status": names_status[ind], "tasks_one_kind": tasks_one_kind.get("tasks")}
         all_tasks.append(tasks)
 
     return templates.TemplateResponse(

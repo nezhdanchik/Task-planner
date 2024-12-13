@@ -8,17 +8,8 @@ from app.api.schemas.enums import TaskPriority, TaskStatus
 from app.api.schemas.task_schema import TaskCreate
 from app.db.database import BaseTable
 
-from .models import Task as TaskTable
-from .models import User as UserTable
-from .session_maker import connection
-
-
-# async def create_tables_if_not_exist():
-#     if not await are_tables_exist():
-#         print('нету таблиц')
-        # async with connection() as session:
-        #     async with session.begin():
-        #         await session.run_sync(BaseTable.metadata.create_all)
+from app.db.models import Task as TaskTable, User as UserTable
+from app.db.session_maker import connection
 
 
 class BaseDAO:
@@ -158,29 +149,9 @@ class TaskDAO(BaseDAO):
         objs = objs.scalars().all()
         return objs
 
-    # @classmethod
-    # @connection(commit=True)
-    # async def finish_task(cls, task_id: int, session: AsyncSession = ...):
-    #     task = await session.get(cls.Table, task_id)
-    #     if not task:
-    #         return False
-    #     task.finished = func.now()
-
 
 if __name__ == "__main__":
-    user_id = 24
-    # TaskCreate(
-    #     title='Помыть посуду',
-    #     description='Помыть все тарелки и кастрюли',
-    #     priority=TaskPriority.HIGH,
-    #     status=TaskStatus.CREATED
-    # ),
-    # TaskCreate(
-    #     title="Сходить за продуктами",
-    #     description="Купить хлеб, молоко, яйца и сыр",
-    #     priority=TaskPriority.MEDIUM,
-    #     status=TaskStatus.CREATED
-    # ),
+    user_id = 1
     fake_tasks = [
         TaskCreate(
             title="Позвонить стоматологу",

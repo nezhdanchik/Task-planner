@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from pydantic import BaseModel, Field
 
 from app.api.schemas import enums
@@ -39,3 +41,13 @@ class TaskUpdate(BaseModel):
     priority: enums.TaskPriority | None = enums.TaskPriority.LOW.value
 
     model_config = {"use_enum_values": True}
+
+class TaskInDB(BaseModel):
+    id: int
+    title: str
+    description: str | None
+    status: enums.TaskStatus
+    priority: enums.TaskPriority
+    created_at: datetime
+    updated_at: datetime
+    finished: datetime | None
