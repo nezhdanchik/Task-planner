@@ -6,7 +6,7 @@ from app.api.schemas.task_schema import TaskStatus, TaskInDB
 from app.db.interaction import TaskDAO
 from app.redis_interaction import UserTasksCache
 from app.api.schemas import enums
-
+from app.logger import logger
 router = APIRouter()
 
 
@@ -20,6 +20,7 @@ async def get_tasks(user: current_user_annotation, status: enums.TaskStatus):
     cache = UserTasksCache(status.value, user.id)
     result = await cache.hget()
     if result:
+        logger.info(f'cache used for user {user.id}')
         return result
 
     tasks = await TaskDAO.get_all_tasks_with_status(user_id=user.id,

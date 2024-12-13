@@ -15,7 +15,6 @@ from app.db.database import are_tables_exist, create_tables, is_database_exist, 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print('lifespan')
     if not await is_database_exist():
         await create_database()
 

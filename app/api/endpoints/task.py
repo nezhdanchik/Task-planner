@@ -1,5 +1,3 @@
-import logging
-
 from datetime import datetime
 from typing import Annotated
 
@@ -14,25 +12,14 @@ from app.api.schemas.task_schema import TaskCreate, TaskPriority, TaskStatus, \
 from app.api.schemas import enums
 from app.db.interaction import TaskDAO
 from app.redis_interaction import UserTasksCache
-
-logger = logging.getLogger("uvicorn")
-logger.setLevel(logging.INFO)
-
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.INFO)
-
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-console_handler.setFormatter(formatter)
-
-logger.addHandler(console_handler)
+from app.logger import logger
 
 async def delete_cache(user=Depends(get_current_user)):
     statuses = [st.value for st in enums.TaskStatus]
     for st in statuses:
         cache = UserTasksCache(st, user.id)
         await cache.delete()
-    logger.info('cache deleted')
-    print('cache was deleted')
+    logger.info(f'cache deleted for user {user.id}')
 
 
 async def check_user_has_access_to_task(task_id: int,
