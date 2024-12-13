@@ -25,7 +25,7 @@ ALGORITHM='HS256'
 REDIS_HOST='localhost'
 ```
 
-### Запуск через pip
+### Запуск вручную
 ```
 pip install -r requirements.txt
 uvicorn app.api.endpoints.main:app --reload
